@@ -24,7 +24,7 @@
           class="ml-4 text-primary-text hover:text-secondary-text"
           :disabled="!newMessage.trim()"
         >
-          <PaperAirplaneIcon class="h-6 w-6 transform rotate-90" />
+          <PaperAirplaneIcon class="h-6 w-6 transform" />
         </button>
       </form>
     </footer>
