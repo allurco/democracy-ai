@@ -33,7 +33,7 @@
 
 <script setup lang="ts">
 import { ref, nextTick, onMounted, onBeforeUnmount } from 'vue'
-import socket from './services/socket.ts'
+import socket from './services/socket'
 import ChatMessage from './components/ChatMessage.vue'
 import { PaperAirplaneIcon } from '@heroicons/vue/24/solid'
 
