@@ -1,0 +1,47 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply text-gray-800 font-sans;
+    @apply font-sans;
+    font-family: 'Inter', sans-serif;
+  }
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #202123;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #5d5f6a;
+  border-radius: 4px;
+}
+
+a {
+  color: #10a37f; /* Accent color */
+  text-decoration: underline;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+pre {
+  background-color: #2e2f32;
+  padding: 1em;
+  border-radius: 5px;
+  overflow-x: auto;
+}
+
+code {
+  background-color: transparent;
+  color: #ffffff;
+}
