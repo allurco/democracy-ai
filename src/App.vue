@@ -90,7 +90,7 @@ function sendMessage() {
     currentMessage.value = {
       id: generateId(),
       sender: 'assistant',
-      text: 'Gerando...',
+      text: 'Processando...',
       pristine: true,
     }
     messages.value.push(currentMessage.value)
