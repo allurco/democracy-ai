@@ -16,6 +16,7 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "@gtm-support/vue-gtm": "^3.1.0",
     "@heroicons/vue": "^2.1.5",
     "dompurify": "^3.1.7",
     "markdown-it": "^14.1.0",
@@ -23,6 +24,7 @@
     "socket.io-client": "^4.8.0",
     "uuid": "^10.0.0",
     "vue": "^3.5.12",
+    "vue-gtag-next": "^1.14.0",
     "vue-router": "^4.4.5"
   },
   "devDependencies": {
