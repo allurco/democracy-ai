@@ -85,7 +85,7 @@ onBeforeUnmount(() => {
   socket.off('message', onMessageReceived)
 })
 
-function createChat(id) {
+function createChat(id: string) {
 
   chat.value = {
     id: id,
@@ -96,15 +96,15 @@ function createChat(id) {
 
 function updateMessage()
 {
-  chat.value.messages = [...messages.value]
-  console.log(chat.value);
-  
-  socket.emit('save_chat', chat);
+  if (chat.value) {
+    chat.value.messages = [...messages.value]
+    socket.emit('save_chat', chat);
+  }
 }
 
-function saveMessage(message) {
+function saveMessage(message: Message | null) {
   socket.emit('save_message', {
-    chatId: chat.value.id,
+    chatId: chat?.value?.id,
     ...message
   })
 }
@@ -112,8 +112,8 @@ function saveMessage(message) {
 // Função para Enviar Mensagem
 function sendMessage() {
   if (newMessage.value.trim()) {
-    socket.emit('generate', { message: newMessage.value, threadId: chat.value.id })
-    const messageUser = {
+    socket.emit('generate', { message: newMessage.value, threadId: chat?.value?.id })
+    const messageUser: Message = {
       id: generateId(),
       sender: 'you',
       text: newMessage.value,
@@ -121,12 +121,14 @@ function sendMessage() {
     }
     saveMessage(messageUser);
     messages.value.push(messageUser)
-    currentMessage.value = {
+
+    const messageAssistant: Message = {
       id: generateId(),
       sender: 'assistant',
       text: 'Processando...',
       pristine: true,
     }
+    currentMessage.value = messageAssistant;
     messages.value.push(currentMessage.value)
     newMessage.value = ''
 
