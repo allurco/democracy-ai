@@ -1,7 +1,7 @@
 // src/socket.ts
 import { io, Socket } from 'socket.io-client'
 
-const URL = 'https://democracy-ai.allur.co' // Replace with your backend URL if different
+const URL = import.meta.env.VITE_SERVICE_URL
 
 const socket: Socket = io(URL, {
   transports: ['websocket'],
