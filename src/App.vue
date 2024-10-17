@@ -45,10 +45,16 @@ interface Message {
   pristine: boolean
 }
 
+interface Chat {
+  id: string
+  messages: Message[]
+}
+
 // Estados Reativos
 const messages = ref<Message[]>([])
 const newMessage = ref('')
 const currentMessage = ref<Message | null>(null)
+const chat = ref<Chat>();
 
 // Função para Gerar IDs Únicos
 import { v4 as uuidv4 } from 'uuid'
@@ -71,22 +77,50 @@ onMounted(() => {
 
   // Configurar o socket para ouvir mensagens
   socket.on('message', onMessageReceived)
+  socket.on('done', done)
+  socket.on('thread_created', createChat)
 })
 
 onBeforeUnmount(() => {
   socket.off('message', onMessageReceived)
 })
 
+function createChat(id) {
+
+  chat.value = {
+    id: id,
+    messages: []
+  }
+
+}
+
+function updateMessage()
+{
+  chat.value.messages = [...messages.value]
+  console.log(chat.value);
+  
+  socket.emit('save_chat', chat);
+}
+
+function saveMessage(message) {
+  socket.emit('save_message', {
+    chatId: chat.value.id,
+    ...message
+  })
+}
+
 // Função para Enviar Mensagem
 function sendMessage() {
   if (newMessage.value.trim()) {
-    socket.emit('generate', { message: newMessage.value })
-    messages.value.push({
+    socket.emit('generate', { message: newMessage.value, threadId: chat.value.id })
+    const messageUser = {
       id: generateId(),
       sender: 'you',
       text: newMessage.value,
       pristine: true,
-    })
+    }
+    saveMessage(messageUser);
+    messages.value.push(messageUser)
     currentMessage.value = {
       id: generateId(),
       sender: 'assistant',
@@ -104,6 +138,12 @@ function sendMessage() {
       }
     })
   }
+}
+
+function done() {
+  console.log('done');
+  saveMessage(currentMessage.value);
+  updateMessage()
 }
 
 // Função para Receber Mensagens
